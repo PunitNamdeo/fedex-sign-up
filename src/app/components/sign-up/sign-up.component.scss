@@ -1,0 +1,27 @@
+.container {
+  padding: 50px;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+}
+
+.title-center {
+  margin:0 auto;
+}
+
+.form {
+  width:420px;
+  margin:30px auto;
+  display:block;
+  float:none;
+
+  .form-element {
+    padding: 5px 0px 25px 2px;
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+

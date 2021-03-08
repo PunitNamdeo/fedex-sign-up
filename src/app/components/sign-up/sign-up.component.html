@@ -1,0 +1,70 @@
+<!-- Toolbar -->
+<mat-toolbar color="warn" class="header">
+  <span class="title-center mat-h1">{{fedexSignUpTitle}}</span>
+</mat-toolbar>
+
+<!-- wrapper -->
+<mat-sidenav-container *ngIf="!post; else forminfo" novalidate>
+  <mat-sidenav-content>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form" autocomplete="off">
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="First Name" formControlName="firstName" required>
+        <mat-error *ngIf="!formGroup.controls['firstName'].valid && formGroup.controls['firstName'].touched">
+          <mat-error *ngIf="formGroup.controls['firstName'].hasError('required')">
+            {{ requiredField }}
+          </mat-error>
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls['firstName'].hasError('minlength')">
+          {{ firstNameMinLength }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Last Name" formControlName="lastName" required>
+        <mat-error *ngIf="!formGroup.controls['lastName'].valid && formGroup.controls['lastName'].touched">
+          <mat-error *ngIf="formGroup.controls['lastName'].hasError('required')">
+            {{ requiredField }}
+          </mat-error>
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls['lastName'].hasError('minlength')">
+          {{ lastNameMinLength }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Email Address" formControlName="email" required>
+        <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
+          {{ getErrorEmail() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Password" formControlName="password" [type]="passwordHide ? 'password' : 'text'" (input)="onPasswordInput()" autocomplete="off" required>
+        <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-hint>{{passwordHint}}</mat-hint>
+        <mat-error *ngIf="!formGroup.controls['password'].valid && formGroup.controls['password'].touched">
+          {{ getErrorPassword() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Confirm Password" formControlName="confirmPassword" [type]="confirmPasswordHide ? 'password' : 'text'" (input)="onPasswordInput()" autocomplete="off" required>
+        <mat-icon matSuffix (click)="confirmPasswordHide = !confirmPasswordHide">{{confirmPasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="formGroup.controls['confirmPassword'].hasError('required')">{{ getErrorConfirmPassword() }}</mat-error>
+        <mat-error *ngIf="formGroup.controls['confirmPassword'].invalid && !formGroup.controls['confirmPassword'].hasError('required')">{{ passwordUnmatched }}</mat-error>
+      </mat-form-field>
+
+      <div class="form-element">
+        <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Create Account</button>
+      </div>
+
+    </form>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #forminfo>
+  <div class="container">
+    <mat-card>Congratulations!! {{ post.firstName}}, You have successfully created your account at FedEx.</mat-card>
+  </div>
+</ng-template>
